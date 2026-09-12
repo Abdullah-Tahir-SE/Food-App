@@ -37,7 +37,8 @@ export const CartDrawer = () => {
     promoError,
     promoSuccess,
     placeOrder,
-    orderMode
+    orderMode,
+    activeTab
   } = useCart();
 
   const [checkoutStep, setCheckoutStep] = useState('cart'); // 'cart' | 'checkout'
@@ -48,7 +49,7 @@ export const CartDrawer = () => {
   const [paymentMethod, setPaymentMethod] = useState('Cash on Delivery');
   const [formError, setFormError] = useState('');
 
-  if (!isCartOpen) return null;
+  if (!isCartOpen || activeTab === 'admin') return null;
 
   const handleConfirmCheckout = (e) => {
     e.preventDefault();

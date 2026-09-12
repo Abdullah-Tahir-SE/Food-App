@@ -5,6 +5,9 @@ import { Home, Utensils, Flame, ShoppingBag } from 'lucide-react';
 export const MobileBottomNav = () => {
   const { activeTab, setActiveTab, totalCartCount, setIsCartOpen } = useCart();
 
+  // Hide mobile bottom navigation dock completely when in Admin Portal mode
+  if (activeTab === 'admin') return null;
+
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#121417]/95 backdrop-blur-lg border-t border-[#23272B] px-4 py-2 shadow-2xl">
       <div className="flex items-center justify-around">

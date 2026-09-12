@@ -170,24 +170,31 @@ export const Navbar = () => {
             </nav>
           </div>
 
-          {/* Right Action: Animated Cart Button */}
+          {/* Right Action: Cart Button or Kitchen Portal Active Badge */}
           <div className="flex items-center space-x-3">
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="relative flex items-center space-x-2.5 bg-gradient-to-r from-[#E8590C] to-[#D9480F] hover:from-[#D9480F] hover:to-[#E8590C] text-white px-5 py-2.5 rounded-xl font-extrabold text-xs shadow-lg shadow-[#E8590C]/30 hover:scale-105 transition-all duration-200 focus:outline-none cursor-pointer"
-            >
-              <ShoppingBag className="w-4 h-4" />
-              <span className="hidden sm:inline uppercase">Cart</span>
-              {totalCartCount > 0 ? (
-                <span className="bg-white text-[#E8590C] px-2 py-0.5 rounded-full font-black text-xs animate-bounce shadow-md">
-                  {totalCartCount}
-                </span>
-              ) : (
-                <span className="bg-black/20 text-white/80 px-1.5 py-0.5 rounded-full font-bold text-xs">
-                  0
-                </span>
-              )}
-            </button>
+            {activeTab === 'admin' ? (
+              <div className="flex items-center space-x-2 bg-amber-500/10 border border-amber-500/40 text-amber-300 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+                <span>👨‍🍳 Kitchen Portal</span>
+              </div>
+            ) : (
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="relative flex items-center space-x-2.5 bg-gradient-to-r from-[#E8590C] to-[#D9480F] hover:from-[#D9480F] hover:to-[#E8590C] text-white px-5 py-2.5 rounded-xl font-extrabold text-xs shadow-lg shadow-[#E8590C]/30 hover:scale-105 transition-all duration-200 focus:outline-none cursor-pointer"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                <span className="hidden sm:inline uppercase">Cart</span>
+                {totalCartCount > 0 ? (
+                  <span className="bg-white text-[#E8590C] px-2 py-0.5 rounded-full font-black text-xs animate-bounce shadow-md">
+                    {totalCartCount}
+                  </span>
+                ) : (
+                  <span className="bg-black/20 text-white/80 px-1.5 py-0.5 rounded-full font-bold text-xs">
+                    0
+                  </span>
+                )}
+              </button>
+            )}
           </div>
 
         </div>
