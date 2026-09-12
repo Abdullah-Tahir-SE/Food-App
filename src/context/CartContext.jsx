@@ -49,9 +49,10 @@ const INITIAL_ORDERS = [
 ];
 
 export const CartProvider = ({ children }) => {
-  // Sync state with LocalStorage
+  // Sync state with LocalStorage safely
   const [cart, setCart] = useState(() => {
     try {
+      if (typeof window === 'undefined' || !window.localStorage) return [];
       const saved = localStorage.getItem('foodcart_cart');
       return saved ? JSON.parse(saved) : [];
     } catch (e) {
@@ -61,6 +62,7 @@ export const CartProvider = ({ children }) => {
 
   const [orders, setOrders] = useState(() => {
     try {
+      if (typeof window === 'undefined' || !window.localStorage) return INITIAL_ORDERS;
       const saved = localStorage.getItem('foodcart_orders');
       return saved ? JSON.parse(saved) : INITIAL_ORDERS;
     } catch (e) {
@@ -69,11 +71,19 @@ export const CartProvider = ({ children }) => {
   });
 
   const [orderMode, setOrderMode] = useState(() => {
-    return localStorage.getItem('foodcart_ordermode') || 'delivery';
+    try {
+      return (typeof window !== 'undefined' && window.localStorage && localStorage.getItem('foodcart_ordermode')) || 'delivery';
+    } catch (e) {
+      return 'delivery';
+    }
   });
 
   const [deliveryLocation, setDeliveryLocation] = useState(() => {
-    return localStorage.getItem('foodcart_location') || 'Gulberg III, Lahore';
+    try {
+      return (typeof window !== 'undefined' && window.localStorage && localStorage.getItem('foodcart_location')) || 'Gulberg III, Lahore';
+    } catch (e) {
+      return 'Gulberg III, Lahore';
+    }
   });
 
   const [activeTab, setActiveTab] = useState('home');
@@ -86,26 +96,46 @@ export const CartProvider = ({ children }) => {
   const [adminAudioAlert, setAdminAudioAlert] = useState(true);
   const [autoWhatsApp, setAutoWhatsApp] = useState(true);
 
-  // Scroll to top of window whenever activeTab changes (e.g. clicking Menu, Home, Deals, etc.)
+  // Scroll to top of window whenever activeTab changes
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    try {
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      }
+    } catch (e) {}
   }, [activeTab]);
 
   // Save to LocalStorage whenever state changes
   useEffect(() => {
-    localStorage.setItem('foodcart_cart', JSON.stringify(cart));
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('foodcart_cart', JSON.stringify(cart));
+      }
+    } catch (e) {}
   }, [cart]);
 
   useEffect(() => {
-    localStorage.setItem('foodcart_orders', JSON.stringify(orders));
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('foodcart_orders', JSON.stringify(orders));
+      }
+    } catch (e) {}
   }, [orders]);
 
   useEffect(() => {
-    localStorage.setItem('foodcart_ordermode', orderMode);
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('foodcart_ordermode', orderMode);
+      }
+    } catch (e) {}
   }, [orderMode]);
 
   useEffect(() => {
-    localStorage.setItem('foodcart_location', deliveryLocation);
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('foodcart_location', deliveryLocation);
+      }
+    } catch (e) {}
   }, [deliveryLocation]);
 
   // Audio chime play function for new orders
