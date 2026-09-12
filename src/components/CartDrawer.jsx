@@ -80,24 +80,24 @@ export const CartDrawer = () => {
         <div className="w-screen max-w-md bg-[#121417] border-l border-[#23272B] shadow-2xl flex flex-col justify-between">
           
           {/* Header */}
-          <div className="p-5 bg-[#181B1E] border-b border-[#23272B] flex items-center justify-between">
+          <div className="p-4 sm:p-5 bg-[#181B1E] border-b border-[#23272B] flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <ShoppingBag className="w-5 h-5 text-[#E8590C]" />
-              <h2 className="font-display text-xl font-black uppercase text-white tracking-tight">
+              <h2 className="font-display text-base sm:text-xl font-black uppercase text-white tracking-tight">
                 {checkoutStep === 'cart' ? 'Your Food Basket' : 'Express Checkout'}
               </h2>
             </div>
 
             <button
               onClick={() => setIsCartOpen(false)}
-              className="w-8 h-8 rounded-full bg-[#121417] hover:bg-[#E8590C] text-gray-400 hover:text-white flex items-center justify-center transition-colors"
+              className="w-8 h-8 rounded-full bg-[#121417] hover:bg-[#E8590C] text-gray-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Body */}
-          <div className="flex-1 overflow-y-auto p-5 space-y-6">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-5">
             
             {checkoutStep === 'cart' ? (
               <>
@@ -326,7 +326,7 @@ export const CartDrawer = () => {
 
           {/* Footer Calculation & Checkout Button */}
           {cart.length > 0 && (
-            <div className="p-5 bg-[#181B1E] border-t border-[#23272B] space-y-3">
+            <div className="p-5 pb-24 md:pb-5 bg-[#181B1E] border-t border-[#23272B] space-y-3">
               <div className="space-y-1.5 text-xs text-gray-400">
                 <div className="flex justify-between">
                   <span>Subtotal:</span>

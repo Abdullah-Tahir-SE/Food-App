@@ -86,8 +86,10 @@ export const CartProvider = ({ children }) => {
   const [adminAudioAlert, setAdminAudioAlert] = useState(true);
   const [autoWhatsApp, setAutoWhatsApp] = useState(true);
 
-  // Modal customizer state for deals
-  const [dealModal, setDealModal] = useState({ isOpen: false, deal: null });
+  // Scroll to top of window whenever activeTab changes (e.g. clicking Menu, Home, Deals, etc.)
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [activeTab]);
 
   // Save to LocalStorage whenever state changes
   useEffect(() => {
