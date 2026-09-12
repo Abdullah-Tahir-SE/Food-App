@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --brand-orange: #E8590C;
+    --brand-orange-hover: #D9480F;
+    --brand-orange-glow: #FF922B;
+    --dark-charcoal: #121417;
+    --dark-mesh: #181B1E;
+    --dark-card: #23272B;
+    --fluted-wood: #FAF6F0;
+    --warm-cream: #F3ECE2;
+    --off-white: #EAD7C3;
+  }
+
+  body {
+    background-color: #121417;
+    color: #FAF6F0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  h1, h2, h3, .font-heading {
+    font-family: 'Syne', 'Unbounded', sans-serif;
+  }
+}
+
+/* Custom Utilities */
+.font-display {
+  font-family: 'Syne', 'Unbounded', sans-serif;
+}
+
+.text-gradient-orange {
+  background: linear-[#FF922B], #E8590C;
+  background: linear-gradient(135deg, #FF922B 0%, #E8590C 50%, #D9480F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glow-orange {
+  box-shadow: 0 0 25px rgba(232, 89, 12, 0.35);
+}
+
+.glow-orange-sm {
+  box-shadow: 0 0 12px rgba(232, 89, 12, 0.3);
+}
+
+.glow-orange-lg {
+  box-shadow: 0 0 45px rgba(232, 89, 12, 0.45);
+}
+
+/* Marquee Ticker Animation */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: 200%;
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Steam Effect Animation */
+@keyframes steam {
+  0% { transform: translateY(0) scale(1); opacity: 0.7; }
+  50% { transform: translateY(-12px) scale(1.2); opacity: 0.4; }
+  100% { transform: translateY(-25px) scale(1.4); opacity: 0; }
+}
+
+.animate-steam {
+  animation: steam 3s ease-out infinite;
+}
+
+/* Pulse Glow Animation */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(232, 89, 12, 0.4); transform: scale(1); }
+  50% { box-shadow: 0 0 35px rgba(255, 146, 43, 0.7); transform: scale(1.03); }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+/* Float Animation */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+.animate-float {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+/* Perforated Mesh Pattern */
+.bg-mesh-pattern {
+  background-color: #181B1E;
+  background-image: radial-gradient(#2d3339 1px, transparent 1px);
+  background-size: 10px 10px;
+}
+
+/* Warm Fluted Wood Texture */
+.bg-fluted-wood {
+  background: repeating-linear-gradient(
+    90deg,
+    #F3ECE2,
+    #F3ECE2 12px,
+    #EAD7C3 12px,
+    #EAD7C3 16px
+  );
+}
+
+.bg-fluted-dark {
+  background: repeating-linear-gradient(
+    90deg,
+    #181B1E,
+    #181B1E 12px,
+    #23272B 12px,
+    #23272B 16px
+  );
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #121417;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #23272B;
+  border-radius: 4px;
+  border: 1px solid rgba(232, 89, 12, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E8590C;
+}
+
+/* Hide scrollbar for clean horizontal swipe lists */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
