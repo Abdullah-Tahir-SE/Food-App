@@ -387,4 +387,47 @@ Thank you! 🔥`;
   );
 };
 
-export const useCart = () => useContext(CartContext);
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    return {
+      cart: [],
+      orders: [],
+      orderMode: 'delivery',
+      setOrderMode: () => {},
+      deliveryLocation: 'Gulberg III, Lahore',
+      setDeliveryLocation: () => {},
+      activeTab: 'home',
+      setActiveTab: () => {},
+      isCartOpen: false,
+      setIsCartOpen: () => {},
+      addToCart: () => {},
+      updateQuantity: () => {},
+      removeFromCart: () => {},
+      clearCart: () => {},
+      promoCode: '',
+      setPromoCode: () => {},
+      appliedPromo: null,
+      applyPromoCode: () => {},
+      promoError: '',
+      promoSuccess: '',
+      subtotal: 0,
+      discountAmount: 0,
+      deliveryFee: 0,
+      taxAmount: 0,
+      grandTotal: 0,
+      totalCartCount: 0,
+      placeOrder: () => {},
+      updateOrderStatus: () => {},
+      sendWhatsAppNotification: () => {},
+      lastPlacedOrder: null,
+      dealModal: { isOpen: false, deal: null },
+      setDealModal: () => {},
+      adminAudioAlert: false,
+      setAdminAudioAlert: () => {},
+      autoWhatsApp: false,
+      setAutoWhatsApp: () => {}
+    };
+  }
+  return context;
+};

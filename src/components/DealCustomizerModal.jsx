@@ -1,22 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import { X, Check, Flame, CupSoda, Utensils, Pizza } from 'lucide-react';
 
 export const DealCustomizerModal = () => {
-  const { dealModal, setDealModal, addToCart } = useCart();
-  const deal = dealModal.deal;
+  const cartCtx = useCart() || {};
+  const dealModal = cartCtx.dealModal || { isOpen: false, deal: null };
+  const setDealModal = cartCtx.setDealModal || (() => {});
+  const addToCart = cartCtx.addToCart || (() => {});
 
-  const [selectedDrink, setSelectedDrink] = useState(
-    deal?.customizableOptions?.drinkOptions?.[0] || 'Default Drink'
-  );
-  const [selectedDip, setSelectedDip] = useState(
-    deal?.customizableOptions?.dipOptions?.[0] || 'Garlic Aioli'
-  );
-  const [selectedCrust, setSelectedCrust] = useState(
-    deal?.customizableOptions?.crustOptions?.[0] || 'Standard Stuffed Crust'
-  );
+  const deal = dealModal?.deal;
 
-  if (!dealModal.isOpen || !deal) return null;
+  const [selectedDrink, setSelectedDrink] = useState('');
+  const [selectedDip, setSelectedDip] = useState('');
+  const [selectedCrust, setSelectedCrust] = useState('');
+
+  useEffect(() => {
+    if (deal && deal.customizableOptions) {
+      setSelectedDrink(deal.customizableOptions.drinkOptions?.[0] || 'Default Drink');
+      setSelectedDip(deal.customizableOptions.dipOptions?.[0] || 'Garlic Aioli');
+      setSelectedCrust(deal.customizableOptions.crustOptions?.[0] || 'Standard Stuffed Crust');
+    }
+  }, [deal]);
+
+  if (!dealModal || !dealModal.isOpen || !deal) return null;
 
   const handleAddDealToCart = () => {
     addToCart(deal, null, {
@@ -38,7 +44,7 @@ export const DealCustomizerModal = () => {
           
           <button
             onClick={() => setDealModal({ isOpen: false, deal: null })}
-            className="absolute top-4 right-4 w-9 h-9 bg-black/60 hover:bg-[#E8590C] text-white rounded-full flex items-center justify-center transition-colors border border-white/20"
+            className="absolute top-4 right-4 w-9 h-9 bg-black/60 hover:bg-[#E8590C] text-white rounded-full flex items-center justify-center transition-colors border border-white/20 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -68,7 +74,7 @@ export const DealCustomizerModal = () => {
                   <button
                     key={drink}
                     onClick={() => setSelectedDrink(drink)}
-                    className={`p-3 rounded-xl border text-xs font-bold text-left transition-all ${
+                    className={`p-3 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
                       selectedDrink === drink
                         ? 'bg-[#E8590C]/15 border-[#E8590C] text-white'
                         : 'bg-[#121417] border-[#23272B] text-gray-300 hover:border-gray-600'
@@ -96,7 +102,7 @@ export const DealCustomizerModal = () => {
                   <button
                     key={dip}
                     onClick={() => setSelectedDip(dip)}
-                    className={`p-3 rounded-xl border text-xs font-bold text-left transition-all ${
+                    className={`p-3 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
                       selectedDip === dip
                         ? 'bg-[#E8590C]/15 border-[#E8590C] text-white'
                         : 'bg-[#121417] border-[#23272B] text-gray-300 hover:border-gray-600'
@@ -124,7 +130,7 @@ export const DealCustomizerModal = () => {
                   <button
                     key={crust}
                     onClick={() => setSelectedCrust(crust)}
-                    className={`p-3 rounded-xl border text-xs font-bold text-left transition-all ${
+                    className={`p-3 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
                       selectedCrust === crust
                         ? 'bg-[#E8590C]/15 border-[#E8590C] text-white'
                         : 'bg-[#121417] border-[#23272B] text-gray-300 hover:border-gray-600'
@@ -147,7 +153,7 @@ export const DealCustomizerModal = () => {
           <div>
             <span className="block text-[10px] uppercase font-bold text-gray-400">Deal Price</span>
             <span className="font-display font-black text-2xl text-[#FF922B]">
-              ${deal.dealPrice.toFixed(2)}
+              ${deal.dealPrice ? deal.dealPrice.toFixed(2) : '0.00'}
             </span>
           </div>
 
