@@ -95,6 +95,7 @@ export const CartProvider = ({ children }) => {
   const [lastPlacedOrder, setLastPlacedOrder] = useState(null);
   const [adminAudioAlert, setAdminAudioAlert] = useState(true);
   const [autoWhatsApp, setAutoWhatsApp] = useState(true);
+  const [dealModal, setDealModal] = useState({ isOpen: false, deal: null });
 
   // Scroll to top of window whenever activeTab changes
   useEffect(() => {
