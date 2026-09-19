@@ -72,7 +72,7 @@ export const MobileBottomNav = () => {
           {/* Home */}
           <button
             onClick={() => setActiveTab('home')}
-            className={`flex flex-col items-center justify-center w-14 py-1 rounded-xl transition-colors cursor-pointer ${
+            className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl transition-colors cursor-pointer ${
               activeTab === 'home' ? 'text-[#E8590C]' : 'text-gray-400 hover:text-gray-200'
             }`}
           >
@@ -83,7 +83,7 @@ export const MobileBottomNav = () => {
           {/* Menu */}
           <button
             onClick={() => setActiveTab('menu')}
-            className={`flex flex-col items-center justify-center w-14 py-1 rounded-xl transition-colors cursor-pointer ${
+            className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl transition-colors cursor-pointer ${
               activeTab === 'menu' ? 'text-[#E8590C]' : 'text-gray-400 hover:text-gray-200'
             }`}
           >
@@ -94,7 +94,7 @@ export const MobileBottomNav = () => {
           {/* Deals */}
           <button
             onClick={() => setActiveTab('deals')}
-            className={`relative flex flex-col items-center justify-center w-14 py-1 rounded-xl transition-colors cursor-pointer ${
+            className={`flex-1 relative flex flex-col items-center justify-center py-1 rounded-xl transition-colors cursor-pointer ${
               activeTab === 'deals' ? 'text-[#E8590C]' : 'text-gray-400 hover:text-gray-200'
             }`}
           >
@@ -106,7 +106,7 @@ export const MobileBottomNav = () => {
           {/* Cart */}
           <button
             onClick={() => setIsCartOpen(true)}
-            className="relative flex flex-col items-center justify-center w-14 py-1 rounded-xl text-gray-400 hover:text-gray-200 cursor-pointer"
+            className="flex-1 relative flex flex-col items-center justify-center py-1 rounded-xl text-gray-400 hover:text-gray-200 cursor-pointer"
           >
             <div className="relative">
               <ShoppingBag className="w-5 h-5 text-white" />
@@ -128,7 +128,7 @@ export const MobileBottomNav = () => {
                 openAuthModal();
               }
             }}
-            className="flex flex-col items-center justify-center w-14 py-1 rounded-xl text-gray-400 hover:text-gray-200 cursor-pointer"
+            className="flex-1 flex flex-col items-center justify-center py-1 rounded-xl text-gray-400 hover:text-gray-200 cursor-pointer"
           >
             {user ? (
               <div className="w-5 h-5 rounded-full bg-[#E8590C] text-white flex items-center justify-center text-[10px] font-black">
