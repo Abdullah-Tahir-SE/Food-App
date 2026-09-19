@@ -12,7 +12,8 @@ import { CartDrawer } from './components/CartDrawer';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { Footer } from './components/Footer';
 import { AuthModal } from './components/AuthModal';
-import { ShieldAlert, X, ChefHat } from 'lucide-react';
+import { DealCustomizerModal } from './components/DealCustomizerModal';
+import { ShieldAlert, X, Lock } from 'lucide-react';
 
 const AppContent = () => {
   const { activeTab, setActiveTab } = useCart();
@@ -50,8 +51,8 @@ const AppContent = () => {
               }}
               className="bg-black/30 hover:bg-black/50 text-amber-200 hover:text-white px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition-colors cursor-pointer flex items-center space-x-1"
             >
-              <ChefHat className="w-3.5 h-3.5" />
-              <span>Login Admin</span>
+              <Lock className="w-3.5 h-3.5" />
+              <span>Sign In</span>
             </button>
             <button
               onClick={() => setAccessDeniedNotice(null)}
@@ -78,6 +79,7 @@ const AppContent = () => {
       <CartDrawer />
       <MobileBottomNav />
       <AuthModal />
+      <DealCustomizerModal />
     </div>
   );
 };

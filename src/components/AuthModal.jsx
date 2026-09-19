@@ -9,8 +9,6 @@ import {
   Lock, 
   Eye, 
   EyeOff, 
-  ChefHat, 
-  ShieldCheck, 
   ArrowRight, 
   Sparkles,
   AlertCircle
@@ -55,8 +53,7 @@ export const AuthModal = () => {
         setIsLoading(false);
         if (res.success) {
           if (res.role === 'admin') {
-            // Unified Staff Login Requirement:
-            // "When these exact credentials are submitted, authenticate as 'Kitchen Admin' and redirect directly to AdminDashboardPage.jsx"
+            // Secret staff credentials check
             setActiveTab('admin');
             setIsCartOpen(false);
           }
@@ -71,13 +68,6 @@ export const AuthModal = () => {
         }
       }
     }, 250);
-  };
-
-  const handleQuickAdminFill = () => {
-    setAuthMode('login');
-    setIdentifier('admin');
-    setPassword('admin');
-    setErrorMessage('');
   };
 
   return (
@@ -189,10 +179,10 @@ export const AuthModal = () => {
               </div>
             )}
 
-            {/* WhatsApp Number / Admin Username */}
+            {/* WhatsApp Number */}
             <div>
               <label className="block text-[10px] font-extrabold uppercase text-gray-400 mb-1.5 flex items-center justify-between">
-                <span>{authMode === 'signup' ? 'WhatsApp Number *' : 'WhatsApp Number / Admin *'}</span>
+                <span>WhatsApp Number *</span>
                 <span className="text-emerald-400 font-bold text-[9px]">📱 03XX-XXXXXXX</span>
               </label>
               <div className="relative">
@@ -200,7 +190,7 @@ export const AuthModal = () => {
                 <input
                   type="text"
                   required
-                  placeholder={authMode === 'signup' ? '0300-1234567' : '0300-1234567 or admin'}
+                  placeholder="0300-1234567"
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
                   className="w-full bg-[#121417] border border-[#23272B] focus:border-emerald-500 text-white text-xs rounded-xl pl-10 pr-4 py-3 outline-none transition-colors"
@@ -249,24 +239,6 @@ export const AuthModal = () => {
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
-
-          {/* Unified Staff / Kitchen Portal Hint Box */}
-          <div className="p-4 bg-[#121417] border-t border-[#23272B] flex items-center justify-between text-[11px]">
-            <div className="flex items-center space-x-2 text-gray-400">
-              <ChefHat className="w-4 h-4 text-amber-400 shrink-0" />
-              <span>
-                Kitchen Staff? Use <strong className="text-white">admin</strong> / <strong className="text-white">admin</strong>
-              </span>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleQuickAdminFill}
-              className="text-[#FF922B] hover:text-[#E8590C] font-extrabold text-[10px] uppercase underline cursor-pointer"
-            >
-              Fill Staff Admin
-            </button>
-          </div>
 
         </motion.div>
       </div>

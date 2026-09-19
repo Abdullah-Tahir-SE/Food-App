@@ -1,9 +1,11 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { UtensilsCrossed, Phone, Mail, MapPin, Lock, Heart } from 'lucide-react';
 
 export const Footer = () => {
   const { setActiveTab } = useCart();
+  const { user } = useAuth();
 
   return (
     <footer className="bg-[#181B1E] border-t border-[#23272B] pt-12 pb-24 md:pb-12 text-gray-400 text-xs">
@@ -107,14 +109,16 @@ export const Footer = () => {
         <div className="pt-6 border-t border-[#23272B] text-center text-[11px] text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-4">
           <span>© 2026 FOOD CART Fast-Food Express Inc. All rights reserved.</span>
 
-          {/* Staff / Kitchen Portal Link */}
-          <button
-            onClick={() => setActiveTab('admin')}
-            className="inline-flex items-center space-x-1.5 bg-[#121417] hover:bg-[#E8590C]/20 border border-[#23272B] hover:border-[#E8590C] text-gray-400 hover:text-amber-300 px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all cursor-pointer"
-          >
-            <Lock className="w-3 h-3 text-amber-400" />
-            <span>🔐 Staff / Kitchen Portal</span>
-          </button>
+          {/* Staff / Kitchen Portal Link (Only visible to verified Kitchen Admin) */}
+          {user?.role === 'admin' && (
+            <button
+              onClick={() => setActiveTab('admin')}
+              className="inline-flex items-center space-x-1.5 bg-[#121417] hover:bg-[#E8590C]/20 border border-[#23272B] hover:border-[#E8590C] text-gray-400 hover:text-amber-300 px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all cursor-pointer"
+            >
+              <Lock className="w-3 h-3 text-amber-400" />
+              <span>🔐 Kitchen Admin Portal</span>
+            </button>
+          )}
         </div>
       </div>
     </footer>
