@@ -26,14 +26,14 @@ export const SPICE_LEVELS = [
 ];
 
 export const MENU_ITEMS = [
-  // PIZZAS
+  // PIZZAS (Realistic PKR fast-food prices: Rs. 950 - Rs. 2,450)
   {
     id: 'pz-stuffed-supreme',
     name: 'Gourmet Stuffed Crust Supreme',
     category: 'pizzas',
     subCategory: 'Premium Flavors',
     tag: 'Bestseller',
-    price: 16.99,
+    price: 1490,
     rating: 4.9,
     reviewsCount: 342,
     spiceLevel: 'spicy',
@@ -42,10 +42,10 @@ export const MENU_ITEMS = [
     calories: '980 kcal',
     prepTime: '18-22 min',
     variants: [
-      { id: 'sm', name: 'Regular 10"', priceModifier: -3.00 },
-      { id: 'md', name: 'Medium 12"', priceModifier: 0.00 },
-      { id: 'lg', name: 'Large 14"', priceModifier: 4.50 },
-      { id: 'stuffed', name: 'Monster Stuffed Crust 16"', priceModifier: 7.99 }
+      { id: 'sm', name: 'Regular 10"', priceModifier: -350 },
+      { id: 'md', name: 'Medium 12"', priceModifier: 0 },
+      { id: 'lg', name: 'Large 14"', priceModifier: 490 },
+      { id: 'stuffed', name: 'Monster Stuffed Crust 16"', priceModifier: 950 }
     ]
   },
   {
@@ -54,7 +54,7 @@ export const MENU_ITEMS = [
     category: 'pizzas',
     subCategory: 'Super Loaded',
     tag: "Chef's Pick",
-    price: 18.49,
+    price: 1690,
     rating: 4.95,
     reviewsCount: 218,
     spiceLevel: 'mild',
@@ -63,9 +63,9 @@ export const MENU_ITEMS = [
     calories: '1050 kcal',
     prepTime: '20 min',
     variants: [
-      { id: 'md', name: 'Medium 12"', priceModifier: 0.00 },
-      { id: 'lg', name: 'Large 14"', priceModifier: 4.50 },
-      { id: 'crown-xl', name: 'Royal Crown XL 16"', priceModifier: 8.50 }
+      { id: 'md', name: 'Medium 12"', priceModifier: 0 },
+      { id: 'lg', name: 'Large 14"', priceModifier: 490 },
+      { id: 'crown-xl', name: 'Royal Crown XL 16"', priceModifier: 760 }
     ]
   },
   {
@@ -74,7 +74,7 @@ export const MENU_ITEMS = [
     category: 'pizzas',
     subCategory: 'Favorite Flavors',
     tag: 'Hot & Spicy',
-    price: 15.99,
+    price: 1390,
     rating: 4.85,
     reviewsCount: 189,
     spiceLevel: 'fiery',
@@ -83,9 +83,9 @@ export const MENU_ITEMS = [
     calories: '890 kcal',
     prepTime: '15 min',
     variants: [
-      { id: 'sm', name: 'Regular 10"', priceModifier: -2.50 },
-      { id: 'md', name: 'Medium 12"', priceModifier: 0.00 },
-      { id: 'lg', name: 'Large 14"', priceModifier: 4.00 }
+      { id: 'sm', name: 'Regular 10"', priceModifier: -300 },
+      { id: 'md', name: 'Medium 12"', priceModifier: 0 },
+      { id: 'lg', name: 'Large 14"', priceModifier: 450 }
     ]
   },
   {
@@ -94,7 +94,7 @@ export const MENU_ITEMS = [
     category: 'pizzas',
     subCategory: 'Classic Flavors',
     tag: 'Bestseller',
-    price: 14.99,
+    price: 1290,
     rating: 4.88,
     reviewsCount: 512,
     spiceLevel: 'mild',
@@ -103,9 +103,9 @@ export const MENU_ITEMS = [
     calories: '910 kcal',
     prepTime: '15 min',
     variants: [
-      { id: 'sm', name: 'Regular 10"', priceModifier: -2.50 },
-      { id: 'md', name: 'Medium 12"', priceModifier: 0.00 },
-      { id: 'lg', name: 'Large 14"', priceModifier: 4.00 }
+      { id: 'sm', name: 'Regular 10"', priceModifier: -300 },
+      { id: 'md', name: 'Medium 12"', priceModifier: 0 },
+      { id: 'lg', name: 'Large 14"', priceModifier: 450 }
     ]
   },
   {
@@ -114,7 +114,7 @@ export const MENU_ITEMS = [
     category: 'pizzas',
     subCategory: "Half 'N Half",
     tag: 'New',
-    price: 17.99,
+    price: 1590,
     rating: 4.91,
     reviewsCount: 140,
     spiceLevel: 'spicy',
@@ -123,19 +123,19 @@ export const MENU_ITEMS = [
     calories: '960 kcal',
     prepTime: '18 min',
     variants: [
-      { id: 'md', name: 'Medium 12"', priceModifier: 0.00 },
-      { id: 'lg', name: 'Large 14"', priceModifier: 4.50 }
+      { id: 'md', name: 'Medium 12"', priceModifier: 0 },
+      { id: 'lg', name: 'Large 14"', priceModifier: 490 }
     ]
   },
 
-  // BURGERS
+  // BURGERS (Realistic PKR fast-food prices: Rs. 490 - Rs. 890)
   {
     id: 'bg-zinger-stacker',
     name: 'Ultimate Zinger Double Stacker',
     category: 'burgers',
     subCategory: 'Crispy Zinger Stackers',
     tag: 'Bestseller',
-    price: 9.99,
+    price: 690,
     rating: 4.95,
     reviewsCount: 520,
     spiceLevel: 'spicy',
@@ -144,9 +144,9 @@ export const MENU_ITEMS = [
     calories: '820 kcal',
     prepTime: '12 min',
     variants: [
-      { id: 'single', name: 'Single Patty', priceModifier: -2.50 },
-      { id: 'double', name: 'Double Stacker', priceModifier: 0.00 },
-      { id: 'monster', name: 'Triple Monster Stacker', priceModifier: 3.50 }
+      { id: 'single', name: 'Single Patty', priceModifier: -150 },
+      { id: 'double', name: 'Double Stacker', priceModifier: 0 },
+      { id: 'monster', name: 'Triple Monster Stacker', priceModifier: 200 }
     ]
   },
   {
@@ -155,7 +155,7 @@ export const MENU_ITEMS = [
     category: 'burgers',
     subCategory: 'Smash Beef',
     tag: "Chef's Pick",
-    price: 11.49,
+    price: 790,
     rating: 4.9,
     reviewsCount: 310,
     spiceLevel: 'mild',
@@ -164,8 +164,8 @@ export const MENU_ITEMS = [
     calories: '890 kcal',
     prepTime: '14 min',
     variants: [
-      { id: 'double', name: 'Double Smash (Standard)', priceModifier: 0.00 },
-      { id: 'triple', name: 'Triple Smash King', priceModifier: 3.00 }
+      { id: 'double', name: 'Double Smash (Standard)', priceModifier: 0 },
+      { id: 'triple', name: 'Triple Smash King', priceModifier: 200 }
     ]
   },
   {
@@ -174,7 +174,7 @@ export const MENU_ITEMS = [
     category: 'burgers',
     subCategory: 'Grilled Chicken',
     tag: 'New',
-    price: 8.99,
+    price: 590,
     rating: 4.82,
     reviewsCount: 175,
     spiceLevel: 'spicy',
@@ -183,8 +183,8 @@ export const MENU_ITEMS = [
     calories: '620 kcal',
     prepTime: '12 min',
     variants: [
-      { id: 'single', name: 'Single Fillet', priceModifier: 0.00 },
-      { id: 'double', name: 'Double Fillet', priceModifier: 2.50 }
+      { id: 'single', name: 'Single Fillet', priceModifier: 0 },
+      { id: 'double', name: 'Double Fillet', priceModifier: 160 }
     ]
   },
   {
@@ -193,7 +193,7 @@ export const MENU_ITEMS = [
     category: 'burgers',
     subCategory: 'Mini Sliders',
     tag: 'Popular',
-    price: 10.99,
+    price: 850,
     rating: 4.86,
     reviewsCount: 210,
     spiceLevel: 'mild',
@@ -202,19 +202,19 @@ export const MENU_ITEMS = [
     calories: '750 kcal',
     prepTime: '12 min',
     variants: [
-      { id: 'trio', name: '3 Sliders Box', priceModifier: 0.00 },
-      { id: 'box6', name: '6 Sliders Party Box', priceModifier: 8.00 }
+      { id: 'trio', name: '3 Sliders Box', priceModifier: 0 },
+      { id: 'box6', name: '6 Sliders Party Box', priceModifier: 550 }
     ]
   },
 
-  // CRISPY CHICKEN
+  // CRISPY CHICKEN (Realistic PKR prices: Rs. 550 - Rs. 1,890)
   {
     id: 'ck-family-bucket-8pcs',
     name: 'Mega Crunch Bucket (8 Pcs)',
     category: 'chicken',
     subCategory: 'Fried Chicken Buckets',
     tag: 'Bestseller',
-    price: 19.99,
+    price: 1890,
     rating: 4.96,
     reviewsCount: 680,
     spiceLevel: 'spicy',
@@ -223,9 +223,9 @@ export const MENU_ITEMS = [
     calories: '1850 kcal',
     prepTime: '15 min',
     variants: [
-      { id: 'mix', name: '50/50 Original & Spicy Mix', priceModifier: 0.00 },
-      { id: 'all-spicy', name: 'All Fiery Spicy', priceModifier: 1.00 },
-      { id: 'all-original', name: 'All Golden Original', priceModifier: 0.00 }
+      { id: 'mix', name: '50/50 Original & Spicy Mix', priceModifier: 0 },
+      { id: 'all-spicy', name: 'All Fiery Spicy', priceModifier: 80 },
+      { id: 'all-original', name: 'All Golden Original', priceModifier: 0 }
     ]
   },
   {
@@ -234,7 +234,7 @@ export const MENU_ITEMS = [
     category: 'chicken',
     subCategory: 'Hot Wings',
     tag: 'Hot & Spicy',
-    price: 13.99,
+    price: 1090,
     rating: 4.88,
     reviewsCount: 390,
     spiceLevel: 'fiery',
@@ -243,9 +243,9 @@ export const MENU_ITEMS = [
     calories: '920 kcal',
     prepTime: '14 min',
     variants: [
-      { id: 'w6', name: '6 Pcs Wings', priceModifier: -5.00 },
-      { id: 'w12', name: '12 Pcs Wings', priceModifier: 0.00 },
-      { id: 'w18', name: '18 Pcs Party Wings', priceModifier: 5.50 }
+      { id: 'w6', name: '6 Pcs Wings', priceModifier: -450 },
+      { id: 'w12', name: '12 Pcs Wings', priceModifier: 0 },
+      { id: 'w18', name: '18 Pcs Party Wings', priceModifier: 450 }
     ]
   },
   {
@@ -254,7 +254,7 @@ export const MENU_ITEMS = [
     category: 'chicken',
     subCategory: 'Crispy Tenders',
     tag: "Chef's Pick",
-    price: 11.99,
+    price: 890,
     rating: 4.89,
     reviewsCount: 295,
     spiceLevel: 'mild',
@@ -263,9 +263,9 @@ export const MENU_ITEMS = [
     calories: '780 kcal',
     prepTime: '10 min',
     variants: [
-      { id: 't4', name: '4 Pcs Box', priceModifier: -3.00 },
-      { id: 't6', name: '6 Pcs Box', priceModifier: 0.00 },
-      { id: 't10', name: '10 Pcs Box', priceModifier: 5.00 }
+      { id: 't4', name: '4 Pcs Box', priceModifier: -250 },
+      { id: 't6', name: '6 Pcs Box', priceModifier: 0 },
+      { id: 't10', name: '10 Pcs Box', priceModifier: 390 }
     ]
   },
   {
@@ -274,7 +274,7 @@ export const MENU_ITEMS = [
     category: 'chicken',
     subCategory: 'Popcorn Bites',
     tag: 'New',
-    price: 6.49,
+    price: 550,
     rating: 4.79,
     reviewsCount: 160,
     spiceLevel: 'spicy',
@@ -283,19 +283,19 @@ export const MENU_ITEMS = [
     calories: '520 kcal',
     prepTime: '8 min',
     variants: [
-      { id: 'reg', name: 'Regular Bucket', priceModifier: 0.00 },
-      { id: 'jumbo', name: 'Jumbo Bucket', priceModifier: 3.00 }
+      { id: 'reg', name: 'Regular Bucket', priceModifier: 0 },
+      { id: 'jumbo', name: 'Jumbo Bucket', priceModifier: 240 }
     ]
   },
 
-  // LOADED FRIES & SIDES
+  // LOADED FRIES & SIDES (Realistic PKR prices: Rs. 390 - Rs. 650)
   {
     id: 'fr-cheesy-jalapeno-loaded',
     name: 'Monster Cheesy Jalapeño Fries',
     category: 'sides',
     subCategory: 'Cheesy Jalapeño',
     tag: 'Bestseller',
-    price: 6.99,
+    price: 590,
     rating: 4.92,
     reviewsCount: 480,
     spiceLevel: 'spicy',
@@ -304,8 +304,8 @@ export const MENU_ITEMS = [
     calories: '620 kcal',
     prepTime: '8 min',
     variants: [
-      { id: 'reg', name: 'Regular Size', priceModifier: 0.00 },
-      { id: 'share', name: 'Monster Sharing Tray', priceModifier: 3.50 }
+      { id: 'reg', name: 'Regular Size', priceModifier: 0 },
+      { id: 'share', name: 'Monster Sharing Tray', priceModifier: 260 }
     ]
   },
   {
@@ -314,7 +314,7 @@ export const MENU_ITEMS = [
     category: 'sides',
     subCategory: 'Dynamite Fries',
     tag: 'Hot & Spicy',
-    price: 7.49,
+    price: 650,
     rating: 4.87,
     reviewsCount: 220,
     spiceLevel: 'fiery',
@@ -323,8 +323,8 @@ export const MENU_ITEMS = [
     calories: '680 kcal',
     prepTime: '8 min',
     variants: [
-      { id: 'reg', name: 'Regular Size', priceModifier: 0.00 },
-      { id: 'lg', name: 'Large Size', priceModifier: 2.50 }
+      { id: 'reg', name: 'Regular Size', priceModifier: 0 },
+      { id: 'lg', name: 'Large Size', priceModifier: 200 }
     ]
   },
   {
@@ -333,7 +333,7 @@ export const MENU_ITEMS = [
     category: 'sides',
     subCategory: 'Mozzarella Sticks',
     tag: "Chef's Pick",
-    price: 5.99,
+    price: 520,
     rating: 4.85,
     reviewsCount: 310,
     spiceLevel: 'mild',
@@ -342,8 +342,8 @@ export const MENU_ITEMS = [
     calories: '490 kcal',
     prepTime: '6 min',
     variants: [
-      { id: 'pcs6', name: '6 Pcs Box', priceModifier: 0.00 },
-      { id: 'pcs10', name: '10 Pcs Mega Box', priceModifier: 3.50 }
+      { id: 'pcs6', name: '6 Pcs Box', priceModifier: 0 },
+      { id: 'pcs10', name: '10 Pcs Mega Box', priceModifier: 280 }
     ]
   },
   {
@@ -352,7 +352,7 @@ export const MENU_ITEMS = [
     category: 'sides',
     subCategory: 'Onion Rings',
     tag: 'New',
-    price: 4.99,
+    price: 390,
     rating: 4.75,
     reviewsCount: 150,
     spiceLevel: 'mild',
@@ -361,19 +361,19 @@ export const MENU_ITEMS = [
     calories: '450 kcal',
     prepTime: '6 min',
     variants: [
-      { id: 'reg', name: 'Regular Basket', priceModifier: 0.00 },
-      { id: 'lg', name: 'Large Basket', priceModifier: 2.00 }
+      { id: 'reg', name: 'Regular Basket', priceModifier: 0 },
+      { id: 'lg', name: 'Large Basket', priceModifier: 150 }
     ]
   },
 
-  // PLATTERS
+  // PLATTERS (Realistic PKR prices: Rs. 2,490 - Rs. 2,690)
   {
     id: 'pl-sizzling-beef-steak',
     name: 'Sizzling Peppered Ribeye Steak Platter',
     category: 'platters',
     subCategory: 'Peppered Ribeye',
     tag: "Chef's Pick",
-    price: 21.99,
+    price: 2490,
     rating: 4.97,
     reviewsCount: 175,
     spiceLevel: 'mild',
@@ -382,8 +382,8 @@ export const MENU_ITEMS = [
     calories: '1150 kcal',
     prepTime: '20 min',
     variants: [
-      { id: 'med-rare', name: 'Medium Rare', priceModifier: 0.00 },
-      { id: 'med-well', name: 'Medium Well', priceModifier: 0.00 }
+      { id: 'med-rare', name: 'Medium Rare', priceModifier: 0 },
+      { id: 'med-well', name: 'Medium Well', priceModifier: 0 }
     ]
   },
   {
@@ -392,7 +392,7 @@ export const MENU_ITEMS = [
     category: 'platters',
     subCategory: 'Smokey Ribs',
     tag: 'Bestseller',
-    price: 23.99,
+    price: 2690,
     rating: 4.93,
     reviewsCount: 198,
     spiceLevel: 'spicy',
@@ -401,19 +401,19 @@ export const MENU_ITEMS = [
     calories: '1380 kcal',
     prepTime: '22 min',
     variants: [
-      { id: 'std', name: 'Standard Platter', priceModifier: 0.00 },
-      { id: 'xl', name: 'XL Feast Platter', priceModifier: 8.00 }
+      { id: 'std', name: 'Standard Platter', priceModifier: 0 },
+      { id: 'xl', name: 'XL Feast Platter', priceModifier: 600 }
     ]
   },
 
-  // DRINKS & SHAKES
+  // DRINKS & SHAKES (Realistic PKR prices: Rs. 590)
   {
     id: 'dr-nutella-brownie-shake',
     name: 'Monster Nutella & Fudge Brownie Shake',
     category: 'drinks',
     subCategory: 'Gourmet Shakes',
     tag: 'Bestseller',
-    price: 5.99,
+    price: 590,
     rating: 4.94,
     reviewsCount: 540,
     spiceLevel: 'none',
@@ -422,8 +422,8 @@ export const MENU_ITEMS = [
     calories: '680 kcal',
     prepTime: '5 min',
     variants: [
-      { id: 'reg', name: 'Regular 16oz', priceModifier: 0.00 },
-      { id: 'jumbo', name: 'Jumbo Monster 24oz', priceModifier: 2.00 }
+      { id: 'reg', name: 'Regular 16oz', priceModifier: 0 },
+      { id: 'jumbo', name: 'Jumbo Monster 24oz', priceModifier: 160 }
     ]
   },
   {
@@ -432,7 +432,7 @@ export const MENU_ITEMS = [
     category: 'drinks',
     subCategory: 'Desserts & Lava Cake',
     tag: "Chef's Pick",
-    price: 6.99,
+    price: 590,
     rating: 4.88,
     reviewsCount: 210,
     spiceLevel: 'none',
@@ -441,8 +441,8 @@ export const MENU_ITEMS = [
     calories: '550 kcal',
     prepTime: '8 min',
     variants: [
-      { id: 'single', name: 'Single Lava Cake', priceModifier: 0.00 },
-      { id: 'double', name: 'Duo Lava Cake', priceModifier: 5.00 }
+      { id: 'single', name: 'Single Lava Cake', priceModifier: 0 },
+      { id: 'double', name: 'Duo Lava Cake', priceModifier: 450 }
     ]
   }
 ];

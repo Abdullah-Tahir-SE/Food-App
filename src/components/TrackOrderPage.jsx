@@ -174,7 +174,7 @@ export const TrackOrderPage = () => {
                       </div>
                     </div>
                     <span className="font-bold text-amber-400">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      Rs. {(item.price * item.quantity).toLocaleString()}
                     </span>
                   </div>
                 ))}
@@ -183,7 +183,7 @@ export const TrackOrderPage = () => {
               <div className="flex justify-between items-center pt-4 border-t border-[#23272B] mt-4 text-xs font-bold text-gray-300">
                 <span>Total Amount Paid ({activeOrder.paymentMethod}):</span>
                 <span className="font-display font-black text-xl text-[#FF922B]">
-                  ${activeOrder.grandTotal.toFixed(2)}
+                  Rs. {Math.round(activeOrder.grandTotal).toLocaleString()}
                 </span>
               </div>
             </div>

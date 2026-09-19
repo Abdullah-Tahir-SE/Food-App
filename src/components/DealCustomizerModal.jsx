@@ -153,7 +153,7 @@ export const DealCustomizerModal = () => {
           <div>
             <span className="block text-[10px] uppercase font-bold text-gray-400">Deal Price</span>
             <span className="font-display font-black text-2xl text-[#FF922B]">
-              ${deal.dealPrice ? deal.dealPrice.toFixed(2) : '0.00'}
+              Rs. {deal.dealPrice ? Math.round(deal.dealPrice).toLocaleString() : '0'}
             </span>
           </div>
 

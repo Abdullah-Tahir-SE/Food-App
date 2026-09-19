@@ -1,44 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { 
   ShoppingBag, 
-  MapPin, 
   ChevronDown, 
   UtensilsCrossed, 
   Flame, 
-  Truck, 
-  Store 
+  User, 
+  LogOut, 
+  ChefHat, 
+  Phone 
 } from 'lucide-react';
-
-const LOCATIONS = [
-  'Gulberg III, Lahore',
-  'Model Town, Lahore',
-  'DHA Phase 5, Lahore',
-  'University Town, Peshawar',
-  'Johar Town, Lahore'
-];
 
 export const Navbar = () => {
   const { 
     totalCartCount, 
     activeTab, 
     setActiveTab, 
-    setIsCartOpen,
-    orderMode,
-    setOrderMode,
-    deliveryLocation,
-    setDeliveryLocation
+    setIsCartOpen 
   } = useCart();
 
-  const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const { user, logout, openAuthModal } = useAuth();
+
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    setIsUserMenuOpen(false);
+    if (activeTab === 'admin') {
+      setActiveTab('home');
+    }
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full bg-[#121417]/95 backdrop-blur-md border-b border-[#23272B]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Left: Brand Logo & Location Picker */}
-          <div className="flex items-center space-x-6">
+          {/* Left: Brand Logo */}
+          <div className="flex items-center space-x-8">
             <button 
               onClick={() => setActiveTab('home')} 
               className="flex items-center space-x-3 group focus:outline-none cursor-pointer"
@@ -61,76 +73,11 @@ export const Navbar = () => {
               </div>
             </button>
 
-            {/* Location Picker Dropdown */}
-            <div className="hidden lg:relative lg:block">
-              <button
-                onClick={() => setIsLocationOpen(!isLocationOpen)}
-                className="flex items-center space-x-2 bg-[#181B1E] border border-[#23272B] hover:border-[#E8590C]/50 px-3.5 py-2 rounded-full text-xs font-semibold text-gray-300 transition-colors cursor-pointer"
-              >
-                <MapPin className="w-3.5 h-3.5 text-[#E8590C]" />
-                <span className="text-gray-400">Deliver to:</span>
-                <span className="text-white max-w-[130px] truncate">{deliveryLocation}</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform ${isLocationOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              {isLocationOpen && (
-                <div className="absolute left-0 mt-2 w-56 bg-[#181B1E] border border-[#23272B] rounded-xl shadow-2xl py-2 z-50">
-                  <div className="px-3 py-1 text-[10px] font-bold text-gray-400 uppercase tracking-wider border-b border-[#23272B]">
-                    Select Delivery Zone
-                  </div>
-                  {LOCATIONS.map((loc) => (
-                    <button
-                      key={loc}
-                      onClick={() => {
-                        setDeliveryLocation(loc);
-                        setIsLocationOpen(false);
-                      }}
-                      className={`w-full text-left px-3 py-2 text-xs hover:bg-[#E8590C]/10 flex items-center justify-between cursor-pointer ${
-                        deliveryLocation === loc ? 'text-[#E8590C] font-bold bg-[#E8590C]/5' : 'text-gray-300'
-                      }`}
-                    >
-                      <span>{loc}</span>
-                      {deliveryLocation === loc && <span className="w-1.5 h-1.5 rounded-full bg-[#E8590C]" />}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Center: Order Mode Switcher & Nav Links */}
-          <div className="hidden md:flex items-center space-x-6">
-            {/* Delivery vs Takeaway Switcher */}
-            <div className="flex bg-[#181B1E] p-1 rounded-full border border-[#23272B]">
-              <button
-                onClick={() => setOrderMode('delivery')}
-                className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-300 cursor-pointer ${
-                  orderMode === 'delivery'
-                    ? 'bg-gradient-to-r from-[#E8590C] to-[#D9480F] text-white shadow-lg shadow-[#E8590C]/30'
-                    : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                <Truck className="w-3.5 h-3.5" />
-                <span>Delivery</span>
-              </button>
-              <button
-                onClick={() => setOrderMode('takeaway')}
-                className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-300 cursor-pointer ${
-                  orderMode === 'takeaway'
-                    ? 'bg-gradient-to-r from-[#E8590C] to-[#D9480F] text-white shadow-lg shadow-[#E8590C]/30'
-                    : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                <Store className="w-3.5 h-3.5" />
-                <span>Takeaway</span>
-              </button>
-            </div>
-
-            {/* Nav Links */}
-            <nav className="flex items-center space-x-1 lg:space-x-2">
+            {/* Desktop Navigation Links */}
+            <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
               <button
                 onClick={() => setActiveTab('home')}
-                className={`px-3 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-colors cursor-pointer ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-colors cursor-pointer ${
                   activeTab === 'home' ? 'text-[#E8590C] bg-[#E8590C]/10' : 'text-gray-300 hover:text-white hover:bg-[#181B1E]'
                 }`}
               >
@@ -139,7 +86,7 @@ export const Navbar = () => {
 
               <button
                 onClick={() => setActiveTab('menu')}
-                className={`px-3 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-colors cursor-pointer ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-colors cursor-pointer ${
                   activeTab === 'menu' ? 'text-[#E8590C] bg-[#E8590C]/10' : 'text-gray-300 hover:text-white hover:bg-[#181B1E]'
                 }`}
               >
@@ -148,7 +95,7 @@ export const Navbar = () => {
 
               <button
                 onClick={() => setActiveTab('deals')}
-                className={`relative px-3 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-colors flex items-center space-x-1 cursor-pointer ${
+                className={`relative px-3.5 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-colors flex items-center space-x-1 cursor-pointer ${
                   activeTab === 'deals' ? 'text-[#E8590C] bg-[#E8590C]/10' : 'text-gray-300 hover:text-white hover:bg-[#181B1E]'
                 }`}
               >
@@ -161,7 +108,7 @@ export const Navbar = () => {
 
               <button
                 onClick={() => setActiveTab('story')}
-                className={`px-3 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-colors cursor-pointer ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-colors cursor-pointer ${
                   activeTab === 'story' ? 'text-[#E8590C] bg-[#E8590C]/10' : 'text-gray-300 hover:text-white hover:bg-[#181B1E]'
                 }`}
               >
@@ -170,17 +117,107 @@ export const Navbar = () => {
             </nav>
           </div>
 
-          {/* Right Action: Cart Button or Kitchen Portal Active Badge */}
+          {/* Right Action: Auth & Cart */}
           <div className="flex items-center space-x-3">
+            
+            {/* 1. Auth Controls */}
+            {user ? (
+              /* Logged In Account Pill with Dropdown */
+              <div className="relative" ref={userMenuRef}>
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="flex items-center space-x-2 bg-[#181B1E] hover:bg-[#23272B] border border-[#23272B] hover:border-[#E8590C]/50 px-3 sm:px-4 py-2 rounded-xl text-xs font-bold text-white transition-all cursor-pointer shadow-md"
+                >
+                  <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#E8590C] to-[#D9480F] flex items-center justify-center text-white font-black text-xs shadow">
+                    {user.role === 'admin' ? (
+                      <ChefHat className="w-4 h-4" />
+                    ) : (
+                      <span>{user.name ? user.name.charAt(0).toUpperCase() : 'U'}</span>
+                    )}
+                  </div>
+                  <span className="max-w-[100px] sm:max-w-[120px] truncate font-extrabold">
+                    {user.name}
+                  </span>
+                  <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {/* Account Dropdown Menu */}
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-64 bg-[#181B1E] border border-[#23272B] rounded-2xl shadow-2xl py-3 z-50 animate-fade-in">
+                    {/* User Info Header */}
+                    <div className="px-4 pb-3 border-b border-[#23272B]">
+                      <div className="flex items-center space-x-2">
+                        <span className="font-extrabold text-sm text-white block truncate">
+                          {user.name}
+                        </span>
+                        {user.role === 'admin' && (
+                          <span className="bg-amber-500/20 text-amber-300 text-[9px] font-black px-1.5 py-0.5 rounded border border-amber-500/30 uppercase">
+                            Admin
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center space-x-1.5 text-xs text-emerald-400 font-semibold mt-1">
+                        <Phone className="w-3.5 h-3.5" />
+                        <span>{user.phone === 'admin' ? 'Kitchen Admin Access' : user.phone}</span>
+                      </div>
+                    </div>
+
+                    {/* Admin Portal Quick Switch */}
+                    {user.role === 'admin' && (
+                      <div className="p-2 border-b border-[#23272B]">
+                        <button
+                          onClick={() => {
+                            setActiveTab('admin');
+                            setIsUserMenuOpen(false);
+                          }}
+                          className={`w-full flex items-center space-x-2 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                            activeTab === 'admin' 
+                              ? 'bg-[#E8590C] text-white' 
+                              : 'text-amber-300 hover:bg-[#23272B]'
+                          }`}
+                        >
+                          <ChefHat className="w-4 h-4" />
+                          <span>Kitchen Admin Dashboard</span>
+                        </button>
+                      </div>
+                    )}
+
+                    {/* Logout Option */}
+                    <div className="pt-2 px-2">
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center space-x-2 px-3 py-2 rounded-xl text-xs font-bold text-red-400 hover:text-white hover:bg-red-500/20 transition-all cursor-pointer"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span>Logout</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              /* Guest "Login / Sign Up" Button */
+              <button
+                onClick={() => openAuthModal()}
+                className="flex items-center space-x-2 bg-[#181B1E] hover:bg-[#23272B] border border-[#23272B] hover:border-[#E8590C]/60 text-white px-3 sm:px-4 py-2.5 rounded-xl font-extrabold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-md"
+              >
+                <User className="w-4 h-4 text-[#FF922B]" />
+                <span className="hidden sm:inline">Login / Sign Up</span>
+                <span className="sm:hidden">Login</span>
+              </button>
+            )}
+
+            {/* 2. Cart Button / Kitchen Portal Active Badge */}
             {activeTab === 'admin' ? (
-              <div className="flex items-center space-x-2 bg-amber-500/10 border border-amber-500/40 text-amber-300 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">
+              <div className="flex items-center space-x-2 bg-amber-500/10 border border-amber-500/40 text-amber-300 px-3.5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-                <span>👨‍🍳 Kitchen Portal</span>
+                <span className="hidden sm:inline">👨‍🍳 Kitchen Portal</span>
+                <span className="sm:hidden">Admin</span>
               </div>
             ) : (
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative flex items-center space-x-2.5 bg-gradient-to-r from-[#E8590C] to-[#D9480F] hover:from-[#D9480F] hover:to-[#E8590C] text-white px-5 py-2.5 rounded-xl font-extrabold text-xs shadow-lg shadow-[#E8590C]/30 hover:scale-105 transition-all duration-200 focus:outline-none cursor-pointer"
+                className="relative flex items-center space-x-2.5 bg-gradient-to-r from-[#E8590C] to-[#D9480F] hover:from-[#D9480F] hover:to-[#E8590C] text-white px-4 sm:px-5 py-2.5 rounded-xl font-extrabold text-xs shadow-lg shadow-[#E8590C]/30 hover:scale-105 transition-all duration-200 focus:outline-none cursor-pointer"
               >
                 <ShoppingBag className="w-4 h-4" />
                 <span className="hidden sm:inline uppercase">Cart</span>
@@ -195,6 +232,7 @@ export const Navbar = () => {
                 )}
               </button>
             )}
+
           </div>
 
         </div>

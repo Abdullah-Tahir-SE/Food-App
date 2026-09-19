@@ -30,7 +30,7 @@ export const HomePage = () => {
       return false;
     }
     return true;
-  }).slice(0, 6);
+  }).slice(0, 8);
 
   return (
     <div className="bg-[#121417] min-h-screen">
@@ -40,19 +40,19 @@ export const HomePage = () => {
       {/* 2. Hero Section */}
       <HeroSection />
 
-      {/* 3. Two-Tier Sticky Category Navigation */}
-      <TwoTierCategoryNav
-        activeTier1={activeTier1}
-        setActiveTier1={setActiveTier1}
-        activeTier2={activeTier2}
-        setActiveTier2={setActiveTier2}
-      />
+      {/* 3. Listed Items & Category Navigation Section */}
+      {/* The category bar only sticks within this section and hides when scrolled past listed items */}
+      <section className="relative bg-mesh-pattern border-b border-[#23272B] pb-16">
+        <TwoTierCategoryNav
+          activeTier1={activeTier1}
+          setActiveTier1={setActiveTier1}
+          activeTier2={activeTier2}
+          setActiveTier2={setActiveTier2}
+        />
 
-      {/* 4. Menu Preview Section */}
-      <section className="py-12 bg-mesh-pattern border-b border-[#23272B]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
           
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-6">
             <div>
               <div className="flex items-center space-x-2">
                 <Flame className="w-5 h-5 text-[#E8590C] animate-pulse" />
@@ -75,7 +75,7 @@ export const HomePage = () => {
           </div>
 
           {previewItems.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
               {previewItems.map((dish) => (
                 <FoodCard key={dish.id} dish={dish} />
               ))}
@@ -95,7 +95,7 @@ export const HomePage = () => {
         </div>
       </section>
 
-      {/* 5. Our Story & Ambience Section */}
+      {/* 4. Our Story & Ambience Section */}
       <section className="py-16 bg-[#121417] relative overflow-hidden border-b border-[#23272B]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           

@@ -127,10 +127,10 @@ export const TopDealsPage = () => {
                 <div className="pt-4 border-t border-[#23272B] flex items-center justify-between">
                   <div>
                     <span className="block text-[10px] text-gray-400 line-through font-bold">
-                      Was ${deal.originalPrice.toFixed(2)}
+                      Was Rs. {deal.originalPrice.toLocaleString()}
                     </span>
                     <span className="font-display font-black text-2xl text-[#FF922B]">
-                      ${deal.dealPrice.toFixed(2)}
+                      Rs. {deal.dealPrice.toLocaleString()}
                     </span>
                   </div>
 

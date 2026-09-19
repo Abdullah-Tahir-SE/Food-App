@@ -12,14 +12,14 @@ const INITIAL_ORDERS = [
     notes: 'Extra garlic mayo dip please!',
     orderMode: 'delivery',
     items: [
-      { id: 'pz-stuffed-supreme', name: 'Gourmet Stuffed Crust Supreme', variant: 'Medium 12"', price: 16.99, quantity: 1 },
-      { id: 'dr-nutella-brownie-shake', name: 'Monster Nutella & Fudge Brownie Shake', variant: 'Regular 16oz', price: 5.99, quantity: 2 }
+      { id: 'pz-stuffed-supreme', name: 'Gourmet Stuffed Crust Supreme', variant: 'Medium 12"', price: 1490, quantity: 1 },
+      { id: 'dr-nutella-brownie-shake', name: 'Monster Nutella & Fudge Brownie Shake', variant: 'Regular 16oz', price: 590, quantity: 2 }
     ],
-    subtotal: 28.97,
-    deliveryFee: 2.50,
-    tax: 2.31,
+    subtotal: 2670,
+    deliveryFee: 150,
+    tax: 214,
     discount: 0,
-    grandTotal: 33.78,
+    grandTotal: 3034,
     paymentMethod: 'Cash on Delivery',
     status: 'Kitchen Preparing',
     timestamp: new Date(Date.now() - 15 * 60000).toISOString(),
@@ -33,14 +33,14 @@ const INITIAL_ORDERS = [
     notes: 'Please keep chicken extra spicy',
     orderMode: 'delivery',
     items: [
-      { id: 'bg-zinger-stacker', name: 'Ultimate Zinger Double Stacker', variant: 'Double Stacker', price: 9.99, quantity: 2 },
-      { id: 'fr-cheesy-jalapeno-loaded', name: 'Monster Cheesy Jalapeño Fries', variant: 'Regular Size', price: 6.99, quantity: 1 }
+      { id: 'bg-zinger-stacker', name: 'Ultimate Zinger Double Stacker', variant: 'Double Stacker', price: 690, quantity: 2 },
+      { id: 'fr-cheesy-jalapeno-loaded', name: 'Monster Cheesy Jalapeño Fries', variant: 'Regular Size', price: 590, quantity: 1 }
     ],
-    subtotal: 26.97,
-    deliveryFee: 2.50,
-    tax: 2.15,
-    discount: 5.39,
-    grandTotal: 26.23,
+    subtotal: 1970,
+    deliveryFee: 150,
+    tax: 126,
+    discount: 394,
+    grandTotal: 1852,
     paymentMethod: 'Card on Delivery',
     status: 'Out for Delivery',
     timestamp: new Date(Date.now() - 32 * 60000).toISOString(),
@@ -199,7 +199,7 @@ export const CartProvider = ({ children }) => {
 ${statusMsg}
 
 📦 *Items:* ${itemsSummary}
-💰 *Total Amount:* $${order.grandTotal.toFixed(2)} (${order.paymentMethod})
+💰 *Total Amount:* Rs. ${Math.round(order.grandTotal).toLocaleString()} (${order.paymentMethod})
 
 Need help? Reply to this chat or call +92 (042) 111-FOOD-CART.
 Thank you! 🔥`;
@@ -229,7 +229,7 @@ Thank you! 🔥`;
             cartItemId,
             id: item.id,
             name: item.name || item.title,
-            price: Number(finalPrice.toFixed(2)),
+            price: Math.round(finalPrice),
             variant: variantName,
             image: item.image,
             quantity: 1,
@@ -279,11 +279,11 @@ Thank you! 🔥`;
     }
   };
 
-  // Calculations
+  // Calculations in PKR
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const discountAmount = appliedPromo ? (subtotal * appliedPromo.discount) / 100 : 0;
-  const deliveryFee = subtotal > 0 ? (orderMode === 'delivery' ? 2.50 : 0) : 0;
-  const taxAmount = (subtotal - discountAmount) * 0.08;
+  const discountAmount = appliedPromo ? Math.round((subtotal * appliedPromo.discount) / 100) : 0;
+  const deliveryFee = subtotal > 0 ? (orderMode === 'delivery' ? 150 : 0) : 0;
+  const taxAmount = Math.round((subtotal - discountAmount) * 0.08);
   const grandTotal = Math.max(0, subtotal - discountAmount + deliveryFee + taxAmount);
   const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -298,11 +298,11 @@ Thank you! 🔥`;
       notes: customerDetails.notes || '',
       orderMode,
       items: [...cart],
-      subtotal: Number(subtotal.toFixed(2)),
-      deliveryFee: Number(deliveryFee.toFixed(2)),
-      tax: Number(taxAmount.toFixed(2)),
-      discount: Number(discountAmount.toFixed(2)),
-      grandTotal: Number(grandTotal.toFixed(2)),
+      subtotal: Math.round(subtotal),
+      deliveryFee: Math.round(deliveryFee),
+      tax: Math.round(taxAmount),
+      discount: Math.round(discountAmount),
+      grandTotal: Math.round(grandTotal),
       paymentMethod: customerDetails.paymentMethod || 'Cash on Delivery',
       status: 'Pending',
       timestamp: new Date().toISOString(),

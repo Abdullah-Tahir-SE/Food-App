@@ -9,7 +9,7 @@ export const MenuPage = () => {
   const [activeTier2, setActiveTier2] = useState('All Pizzas');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSpice, setSelectedSpice] = useState('all');
-  const [maxPrice, setMaxPrice] = useState(25);
+  const [maxPrice, setMaxPrice] = useState(3000);
   const [sortBy, setSortBy] = useState('popular'); // 'popular' | 'price-low' | 'price-high'
 
   // Filtered & Sorted Menu Items
@@ -111,13 +111,13 @@ export const MenuPage = () => {
             <div className="bg-[#121417] px-4 py-2 rounded-xl border border-[#23272B] flex flex-col justify-center">
               <div className="flex justify-between items-center text-[10px] font-bold text-gray-400 uppercase mb-1">
                 <span>Max Price:</span>
-                <span className="text-[#FF922B] font-black">${maxPrice}</span>
+                <span className="text-[#FF922B] font-black">Rs. {maxPrice.toLocaleString()}</span>
               </div>
               <input
                 type="range"
-                min="5"
-                max="30"
-                step="1"
+                min="300"
+                max="3000"
+                step="50"
                 value={maxPrice}
                 onChange={e => setMaxPrice(Number(e.target.value))}
                 className="w-full accent-[#E8590C] cursor-pointer"
@@ -143,7 +143,7 @@ export const MenuPage = () => {
 
         {/* Menu Item Cards Grid */}
         {filteredItems.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
             {filteredItems.map(dish => (
               <FoodCard key={dish.id} dish={dish} />
             ))}
@@ -158,7 +158,7 @@ export const MenuPage = () => {
                 setActiveTier2(TIER2_SUB_CATEGORIES[activeTier1]?.[0] || '');
                 setSearchQuery('');
                 setSelectedSpice('all');
-                setMaxPrice(25);
+                setMaxPrice(3000);
               }}
               className="bg-[#E8590C] text-white px-6 py-2.5 rounded-xl font-bold text-xs uppercase cursor-pointer"
             >

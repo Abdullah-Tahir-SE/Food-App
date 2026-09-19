@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { 
   LayoutDashboard, 
-  DollarSign, 
+  Banknote, 
   ShoppingBag, 
   Clock, 
   ChefHat, 
@@ -106,11 +106,11 @@ export const AdminPanel = () => {
             <div>
               <span className="block text-xs font-bold text-gray-400 uppercase mb-1">Total Revenue</span>
               <span className="font-display font-black text-3xl text-amber-400">
-                ${totalRevenue.toFixed(2)}
+                Rs. {Math.round(totalRevenue).toLocaleString()}
               </span>
             </div>
             <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
-              <DollarSign className="w-6 h-6" />
+              <Banknote className="w-6 h-6" />
             </div>
           </div>
 
@@ -246,7 +246,7 @@ export const AdminPanel = () => {
                       {/* Total & Payment */}
                       <td className="p-4 align-top">
                         <span className="font-display font-black text-sm text-amber-400 block">
-                          ${order.grandTotal.toFixed(2)}
+                          Rs. {Math.round(order.grandTotal).toLocaleString()}
                         </span>
                         <span className="text-[10px] text-gray-400 font-bold block mt-1">
                           {order.paymentMethod}

@@ -21,7 +21,7 @@ export const MenuPage = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSpice, setSelectedSpice] = useState('all');
-  const [maxPrice, setMaxPrice] = useState(25);
+  const [maxPrice, setMaxPrice] = useState(3000);
   const [sortBy, setSortBy] = useState('popular'); // 'popular' | 'price-low' | 'price-high'
   const [selectedVariants, setSelectedVariants] = useState({}); // { itemId: variantId }
 
@@ -137,13 +137,13 @@ export const MenuPage = () => {
             <div className="bg-[#121417] px-4 py-2 rounded-xl border border-[#23272B] flex flex-col justify-center">
               <div className="flex justify-between items-center text-[10px] font-bold text-gray-400 uppercase mb-1">
                 <span>Max Price:</span>
-                <span className="text-[#FF922B] font-black">${maxPrice}</span>
+                <span className="text-[#FF922B] font-black">Rs. {maxPrice.toLocaleString()}</span>
               </div>
               <input
                 type="range"
-                min="5"
-                max="30"
-                step="1"
+                min="300"
+                max="3000"
+                step="50"
                 value={maxPrice}
                 onChange={e => setMaxPrice(Number(e.target.value))}
                 className="w-full accent-[#E8590C] cursor-pointer"
@@ -244,7 +244,7 @@ export const MenuPage = () => {
                           >
                             {item.variants.map(v => (
                               <option key={v.id} value={v.id}>
-                                {v.name} {v.priceModifier !== 0 ? `(${v.priceModifier > 0 ? '+' : ''}$${v.priceModifier.toFixed(2)})` : ''}
+                                {v.name} {v.priceModifier !== 0 ? `(${v.priceModifier > 0 ? '+' : '-'}Rs. ${Math.abs(v.priceModifier)})` : ''}
                               </option>
                             ))}
                           </select>
@@ -257,7 +257,7 @@ export const MenuPage = () => {
                       <div>
                         <span className="block text-[10px] uppercase font-bold text-gray-400">Total Price</span>
                         <span className="font-display font-black text-2xl text-[#FF922B]">
-                          ${computedPrice.toFixed(2)}
+                          Rs. {Math.round(computedPrice).toLocaleString()}
                         </span>
                       </div>
 
@@ -306,7 +306,7 @@ export const MenuPage = () => {
                 setActiveCategory('all');
                 setSearchQuery('');
                 setSelectedSpice('all');
-                setMaxPrice(25);
+                setMaxPrice(3000);
               }}
               className="bg-[#E8590C] text-white px-6 py-2.5 rounded-xl font-bold text-xs uppercase"
             >

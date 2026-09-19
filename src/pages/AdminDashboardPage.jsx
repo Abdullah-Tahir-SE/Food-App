@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { 
-  DollarSign, 
+  Banknote, 
   ShoppingBag, 
   Clock, 
   ChefHat, 
@@ -135,11 +135,11 @@ export const AdminDashboardPage = () => {
             <div>
               <span className="block text-xs font-bold text-gray-400 uppercase mb-1">Total Sales Revenue</span>
               <span className="font-display font-black text-2xl text-amber-400">
-                ${totalRevenue.toFixed(2)}
+                Rs. {Math.round(totalRevenue).toLocaleString()}
               </span>
             </div>
             <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
-              <DollarSign className="w-5 h-5" />
+              <Banknote className="w-5 h-5" />
             </div>
           </div>
 
@@ -287,7 +287,7 @@ export const AdminDashboardPage = () => {
                             <strong className="text-[#E8590C]">{item.quantity}x</strong> {item.name} ({item.variant})
                           </span>
                           <span className="text-gray-400 text-[10px] font-bold">
-                            ${(item.price * item.quantity).toFixed(2)}
+                            Rs. {(item.price * item.quantity).toLocaleString()}
                           </span>
                         </div>
                       ))}
@@ -296,7 +296,7 @@ export const AdminDashboardPage = () => {
                     <div className="mt-2 pt-2 border-t border-[#23272B] flex justify-between items-center text-xs">
                       <span className="text-gray-400 font-bold">Grand Total:</span>
                       <span className="font-display font-black text-base text-[#FF922B]">
-                        ${order.grandTotal.toFixed(2)} ({order.paymentMethod})
+                        Rs. {Math.round(order.grandTotal).toLocaleString()} ({order.paymentMethod})
                       </span>
                     </div>
                   </div>

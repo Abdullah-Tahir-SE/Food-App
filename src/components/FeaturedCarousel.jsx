@@ -96,7 +96,7 @@ export const FeaturedCarousel = () => {
                     <div>
                       <span className="block text-[10px] uppercase font-bold text-gray-400">Starting from</span>
                       <span className="font-display font-black text-xl text-[#FF922B]">
-                        ${dish.price.toFixed(2)}
+                        Rs. {Math.round(dish.price).toLocaleString()}
                       </span>
                     </div>
 

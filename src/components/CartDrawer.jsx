@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { 
   X, 
   Trash2, 
@@ -9,13 +10,16 @@ import {
   Tag, 
   Sparkles, 
   CreditCard, 
-  DollarSign, 
+  Banknote, 
   User, 
   Phone, 
   MapPin, 
   FileText,
   Flame,
-  CheckCircle2
+  CheckCircle2,
+  Lock,
+  Truck,
+  Store
 } from 'lucide-react';
 
 export const CartDrawer = () => {
@@ -41,6 +45,8 @@ export const CartDrawer = () => {
     activeTab
   } = useCart();
 
+  const { user, openAuthModal } = useAuth();
+
   const [checkoutStep, setCheckoutStep] = useState('cart'); // 'cart' | 'checkout'
   const [customerName, setCustomerName] = useState('');
   const [phone, setPhone] = useState('');
@@ -49,7 +55,38 @@ export const CartDrawer = () => {
   const [paymentMethod, setPaymentMethod] = useState('Cash on Delivery');
   const [formError, setFormError] = useState('');
 
+  // Auto-fill customer details from logged-in user profile
+  useEffect(() => {
+    if (user) {
+      if (user.name) setCustomerName(user.name);
+      if (user.phone && user.phone !== 'admin') setPhone(user.phone);
+    }
+  }, [user]);
+
   if (!isCartOpen || activeTab === 'admin') return null;
+
+  // Guest Browsing & Cart Interception Rule:
+  // Guests can freely explore and add items to cart.
+  // When a guest clicks "Proceed to Checkout", intercept action and pop up Login/Signup modal.
+  // After login, resume directly into checkout with cart intact!
+  const handleProceedToCheckout = () => {
+    if (!user) {
+      openAuthModal((loggedInUser) => {
+        setIsCartOpen(true);
+        setCheckoutStep('checkout');
+        if (loggedInUser) {
+          if (loggedInUser.name) setCustomerName(loggedInUser.name);
+          if (loggedInUser.phone && loggedInUser.phone !== 'admin') setPhone(loggedInUser.phone);
+        }
+      });
+      return;
+    }
+
+    // User is logged in: pre-fill if not already edited
+    if (!customerName && user.name) setCustomerName(user.name);
+    if (!phone && user.phone && user.phone !== 'admin') setPhone(user.phone);
+    setCheckoutStep('checkout');
+  };
 
   const handleConfirmCheckout = (e) => {
     e.preventDefault();
@@ -130,7 +167,7 @@ export const CartDrawer = () => {
                           )}
 
                           <div className="font-display font-black text-sm text-[#FF922B] mt-1">
-                            ${(item.price * item.quantity).toFixed(2)}
+                            Rs. {(item.price * item.quantity).toLocaleString()}
                           </div>
                         </div>
 
@@ -139,7 +176,7 @@ export const CartDrawer = () => {
                           <div className="flex items-center bg-[#121417] rounded-lg border border-[#23272B] p-0.5">
                             <button
                               onClick={() => updateQuantity(item.cartItemId, -1)}
-                              className="w-6 h-6 flex items-center justify-center text-xs font-bold text-gray-300 hover:text-white"
+                              className="w-6 h-6 flex items-center justify-center text-xs font-bold text-gray-300 hover:text-white cursor-pointer"
                             >
                               -
                             </button>
@@ -148,7 +185,7 @@ export const CartDrawer = () => {
                             </span>
                             <button
                               onClick={() => updateQuantity(item.cartItemId, 1)}
-                              className="w-6 h-6 flex items-center justify-center text-xs font-bold text-[#E8590C]"
+                              className="w-6 h-6 flex items-center justify-center text-xs font-bold text-[#E8590C] cursor-pointer"
                             >
                               +
                             </button>
@@ -156,7 +193,7 @@ export const CartDrawer = () => {
 
                           <button
                             onClick={() => removeFromCart(item.cartItemId)}
-                            className="text-red-400 hover:text-red-300 p-1 text-[10px] flex items-center space-x-0.5"
+                            className="text-red-400 hover:text-red-300 p-1 text-[10px] flex items-center space-x-0.5 cursor-pointer"
                           >
                             <Trash2 className="w-3 h-3" />
                           </button>
@@ -189,7 +226,7 @@ export const CartDrawer = () => {
                       />
                       <button
                         onClick={() => applyPromoCode(promoCode)}
-                        className="bg-[#E8590C] hover:bg-[#D9480F] text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-colors"
+                        className="bg-[#E8590C] hover:bg-[#D9480F] text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-colors cursor-pointer"
                       >
                         Apply
                       </button>
@@ -210,13 +247,61 @@ export const CartDrawer = () => {
                 )}
               </>
             ) : (
-              /* Checkout Form */
+              /* Auto-Filled Checkout Form */
               <form onSubmit={handleConfirmCheckout} className="space-y-4">
                 {formError && (
                   <div className="bg-red-500/20 border border-red-500 text-red-300 p-3 rounded-xl text-xs font-bold">
                     {formError}
                   </div>
                 )}
+
+                {user && (
+                  <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3 flex items-center justify-between text-xs">
+                    <div className="flex items-center space-x-2 text-emerald-300 font-bold">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                      <span>Ordering as <strong className="text-white">{user.name}</strong></span>
+                    </div>
+                    <span className="text-[10px] text-gray-400 uppercase font-black">Pre-filled</span>
+                  </div>
+                )}
+
+                {/* Delivery vs Takeaway Switcher */}
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">
+                    Select Order Type *
+                  </label>
+                  <div className="grid grid-cols-2 gap-2 bg-[#121417] p-1 rounded-2xl border border-[#23272B]">
+                    <button
+                      type="button"
+                      onClick={() => setOrderMode('delivery')}
+                      className={`py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-2 transition-all cursor-pointer ${
+                        orderMode === 'delivery'
+                          ? 'bg-gradient-to-r from-[#E8590C] to-[#D9480F] text-white shadow-lg'
+                          : 'text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      <Truck className="w-4 h-4" />
+                      <span>Delivery (Rs. 150)</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setOrderMode('takeaway')}
+                      className={`py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-2 transition-all cursor-pointer ${
+                        orderMode === 'takeaway'
+                          ? 'bg-gradient-to-r from-[#E8590C] to-[#D9480F] text-white shadow-lg'
+                          : 'text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      <Store className="w-4 h-4" />
+                      <span>Takeaway (Free)</span>
+                    </button>
+                  </div>
+                  {orderMode === 'takeaway' && (
+                    <p className="text-[10px] text-amber-300 font-bold mt-1.5 flex items-center space-x-1">
+                      <span>🏬 Pick up hot & fresh at our Gulberg III counter in 15-20 mins.</span>
+                    </p>
+                  )}
+                </div>
 
                 <div>
                   <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">
@@ -237,20 +322,23 @@ export const CartDrawer = () => {
 
                 <div>
                   <label className="block text-[10px] font-bold text-[#FF922B] uppercase mb-1 flex items-center justify-between">
-                    <span>WhatsApp Number (for Order Updates) *</span>
-                    <span className="text-emerald-400 font-extrabold text-[9px]">📱 WhatsApp Enabled</span>
+                    <span>WhatsApp Contact (Editable) *</span>
+                    <span className="text-emerald-400 font-extrabold text-[9px]">📱 WhatsApp Updates</span>
                   </label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-400" />
                     <input
                       type="tel"
                       required
-                      placeholder="+92 300 1234567"
+                      placeholder="0300-1234567"
                       value={phone}
                       onChange={e => setPhone(e.target.value)}
                       className="w-full bg-[#181B1E] border border-emerald-500/40 focus:border-emerald-500 text-white text-xs rounded-xl pl-9 pr-3 py-2.5 outline-none"
                     />
                   </div>
+                  <span className="text-[10px] text-gray-500 mt-1 block">
+                    You can edit your delivery contact number if different from your profile.
+                  </span>
                 </div>
 
                 {orderMode === 'delivery' && (
@@ -280,7 +368,7 @@ export const CartDrawer = () => {
                     <FileText className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
                     <textarea
                       rows="2"
-                      placeholder="Extra sauce, double cheese, ring bell twice..."
+                      placeholder="Extra garlic mayo, double crispy, ring bell..."
                       value={notes}
                       onChange={e => setNotes(e.target.value)}
                       className="w-full bg-[#181B1E] border border-[#23272B] focus:border-[#E8590C] text-white text-xs rounded-xl pl-9 pr-3 py-2.5 outline-none"
@@ -296,20 +384,20 @@ export const CartDrawer = () => {
                     <button
                       type="button"
                       onClick={() => setPaymentMethod('Cash on Delivery')}
-                      className={`p-3 rounded-xl border text-xs font-bold text-left flex items-center space-x-2 transition-all ${
+                      className={`p-3 rounded-xl border text-xs font-bold text-left flex items-center space-x-2 transition-all cursor-pointer ${
                         paymentMethod === 'Cash on Delivery'
                           ? 'bg-[#E8590C]/15 border-[#E8590C] text-white'
                           : 'bg-[#181B1E] border-[#23272B] text-gray-400'
                       }`}
                     >
-                      <DollarSign className="w-4 h-4 text-[#E8590C]" />
+                      <Banknote className="w-4 h-4 text-[#E8590C]" />
                       <span>Cash on Delivery</span>
                     </button>
 
                     <button
                       type="button"
                       onClick={() => setPaymentMethod('Card on Delivery')}
-                      className={`p-3 rounded-xl border text-xs font-bold text-left flex items-center space-x-2 transition-all ${
+                      className={`p-3 rounded-xl border text-xs font-bold text-left flex items-center space-x-2 transition-all cursor-pointer ${
                         paymentMethod === 'Card on Delivery'
                           ? 'bg-[#E8590C]/15 border-[#E8590C] text-white'
                           : 'bg-[#181B1E] border-[#23272B] text-gray-400'
@@ -331,44 +419,45 @@ export const CartDrawer = () => {
               <div className="space-y-1.5 text-xs text-gray-400">
                 <div className="flex justify-between">
                   <span>Subtotal:</span>
-                  <span className="font-bold text-white">${subtotal.toFixed(2)}</span>
+                  <span className="font-bold text-white">Rs. {Math.round(subtotal).toLocaleString()}</span>
                 </div>
                 {appliedPromo && (
                   <div className="flex justify-between text-emerald-400 font-bold">
                     <span>Discount ({appliedPromo.code}):</span>
-                    <span>-${discountAmount.toFixed(2)}</span>
+                    <span>-Rs. {Math.round(discountAmount).toLocaleString()}</span>
                   </div>
                 )}
                 <div className="flex justify-between">
                   <span>Delivery Fee:</span>
-                  <span className="font-bold text-white">${deliveryFee.toFixed(2)}</span>
+                  <span className="font-bold text-white">Rs. {Math.round(deliveryFee).toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Tax (8% GST):</span>
-                  <span className="font-bold text-white">${taxAmount.toFixed(2)}</span>
+                  <span className="font-bold text-white">Rs. {Math.round(taxAmount).toLocaleString()}</span>
                 </div>
               </div>
 
               <div className="flex justify-between items-center pt-3 border-t border-[#23272B]">
                 <span className="font-display font-black text-sm uppercase text-white">Grand Total</span>
                 <span className="font-display font-black text-2xl text-[#FF922B]">
-                  ${grandTotal.toFixed(2)}
+                  Rs. {Math.round(grandTotal).toLocaleString()}
                 </span>
               </div>
 
               {checkoutStep === 'cart' ? (
                 <button
-                  onClick={() => setCheckoutStep('checkout')}
-                  className="w-full bg-gradient-to-r from-[#E8590C] to-[#D9480F] hover:from-[#D9480F] hover:to-[#E8590C] text-white py-3.5 rounded-2xl font-black text-xs uppercase tracking-wider shadow-lg shadow-[#E8590C]/30 hover:scale-[1.02] transition-all cursor-pointer"
+                  onClick={handleProceedToCheckout}
+                  className="w-full bg-gradient-to-r from-[#E8590C] to-[#D9480F] hover:from-[#D9480F] hover:to-[#E8590C] text-white py-3.5 rounded-2xl font-black text-xs uppercase tracking-wider shadow-lg shadow-[#E8590C]/30 hover:scale-[1.02] transition-all cursor-pointer flex items-center justify-center space-x-2"
                 >
-                  Proceed to Checkout
+                  {!user && <Lock className="w-3.5 h-3.5" />}
+                  <span>{!user ? 'Sign In & Proceed to Checkout' : 'Proceed to Checkout'}</span>
                 </button>
               ) : (
                 <div className="flex space-x-2">
                   <button
                     type="button"
                     onClick={() => setCheckoutStep('cart')}
-                    className="w-1/3 bg-[#121417] text-gray-300 hover:text-white py-3.5 rounded-2xl font-bold text-xs uppercase border border-[#23272B]"
+                    className="w-1/3 bg-[#121417] text-gray-300 hover:text-white py-3.5 rounded-2xl font-bold text-xs uppercase border border-[#23272B] cursor-pointer"
                   >
                     Back
                   </button>
