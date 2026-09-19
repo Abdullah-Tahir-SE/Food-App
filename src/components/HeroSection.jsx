@@ -7,7 +7,6 @@ import {
   ArrowRight, 
   ChevronLeft, 
   ChevronRight, 
-  Clock, 
   Sparkles, 
   Tag, 
   CheckCircle2, 
@@ -18,12 +17,47 @@ import {
   ShoppingBag
 } from 'lucide-react';
 
+// Professional Typewriter Text Component
+const TypewriterText = ({ text, speed = 25, className = '' }) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [isDone, setIsDone] = useState(false);
+
+  useEffect(() => {
+    setDisplayedText('');
+    setIsDone(false);
+    let index = 0;
+    if (!text) return;
+
+    const interval = setInterval(() => {
+      index++;
+      setDisplayedText(text.slice(0, index));
+      if (index >= text.length) {
+        setIsDone(true);
+        clearInterval(interval);
+      }
+    }, speed);
+
+    return () => clearInterval(interval);
+  }, [text, speed]);
+
+  return (
+    <span className={className}>
+      {displayedText}
+      <span 
+        className={`inline-block w-[3px] sm:w-[4px] h-[0.8em] bg-[#FF922B] ml-1 sm:ml-1.5 align-middle rounded-sm transition-opacity ${
+          isDone ? 'animate-pulse opacity-75' : 'opacity-100 animate-pulse'
+        }`} 
+      />
+    </span>
+  );
+};
+
 export const HeroSection = () => {
   const { setActiveTab, setDealModal, addToCart } = useCart();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Auto-advance banner every 3 seconds (3000ms)
+  // Auto-advance banner every 3 seconds
   useEffect(() => {
     if (isPaused) return;
 
@@ -81,10 +115,10 @@ export const HeroSection = () => {
                 className="w-full p-5 sm:p-8 lg:p-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center"
               >
                 
-                {/* Left Column: Deal Content & Animated Text */}
+                {/* Left Column: Deal Content & Animated Typewriter Text */}
                 <div className="lg:col-span-7 flex flex-col justify-center text-left space-y-3.5">
                   
-                  {/* Row 1: Badges */}
+                  {/* Row 1: Professional Badges */}
                   <motion.div 
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -101,20 +135,20 @@ export const HeroSection = () => {
                       <span>{currentDeal.badge}</span>
                     </span>
 
-                    <span className="hidden sm:inline-flex items-center space-x-1 text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-full text-[10px] font-bold">
-                      <Clock className="w-3 h-3" />
-                      <span>3s Auto-Deal Express</span>
+                    <span className="hidden sm:inline-flex items-center space-x-1.5 text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-full text-[10px] font-bold">
+                      <Sparkles className="w-3 h-3" />
+                      <span>Chef's Signature Combo</span>
                     </span>
                   </motion.div>
 
-                  {/* Row 2: Animated Title */}
+                  {/* Row 2: Animated Title with Typewriter Effect */}
                   <motion.h2 
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1, duration: 0.35 }}
-                    className="font-display text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-white leading-tight"
+                    className="font-display text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-white leading-tight min-h-[2.4em] sm:min-h-[2em] flex items-center"
                   >
-                    {currentDeal.title}
+                    <TypewriterText text={currentDeal.title} speed={25} />
                   </motion.h2>
 
                   {/* Row 3: Description */}
@@ -227,10 +261,10 @@ export const HeroSection = () => {
             </AnimatePresence>
           </div>
 
-          {/* Carousel Bottom Navigation & 3-Second Indicator Bar */}
+          {/* Carousel Bottom Navigation */}
           <div className="bg-[#121417]/90 backdrop-blur-sm border-t border-[#23272B] px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
             
-            {/* 5 Deal Indicators with 3-Second Active Animated Fill */}
+            {/* 5 Deal Indicators with Active Animated Progress Fill */}
             <div className="flex items-center space-x-2 sm:space-x-2.5 overflow-x-auto max-w-full py-1">
               {MEGA_DEALS.map((deal, idx) => {
                 const isActive = idx === currentIndex;
@@ -244,7 +278,7 @@ export const HeroSection = () => {
                         : 'bg-[#16181B] text-gray-400 hover:text-white border border-[#23272B]'
                     }`}
                   >
-                    {/* 3-Second Progress Bar on Active Pill */}
+                    {/* Active Progress Bar */}
                     {isActive && (
                       <motion.div
                         key={`timer-${currentIndex}`}
@@ -266,9 +300,11 @@ export const HeroSection = () => {
 
             {/* Previous / Next Arrow Controls */}
             <div className="flex items-center space-x-2 shrink-0">
-              <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mr-1 hidden sm:inline">
-                {isPaused ? '⏸ Paused' : '⚡ 3s Auto-Slide'}
-              </span>
+              {isPaused && (
+                <span className="text-[10px] text-amber-400 font-bold uppercase tracking-wider mr-1 hidden sm:inline">
+                  ⏸ Paused
+                </span>
+              )}
 
               <button
                 onClick={prevSlide}
