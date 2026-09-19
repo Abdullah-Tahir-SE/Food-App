@@ -42,6 +42,7 @@ export const CartDrawer = () => {
     promoSuccess,
     placeOrder,
     orderMode,
+    setOrderMode,
     activeTab
   } = useCart();
 
@@ -429,11 +430,9 @@ export const CartDrawer = () => {
                 )}
                 <div className="flex justify-between">
                   <span>Delivery Fee:</span>
-                  <span className="font-bold text-white">Rs. {Math.round(deliveryFee).toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Tax (8% GST):</span>
-                  <span className="font-bold text-white">Rs. {Math.round(taxAmount).toLocaleString()}</span>
+                  <span className="font-bold text-white">
+                    {deliveryFee > 0 ? `Rs. ${Math.round(deliveryFee).toLocaleString()}` : 'FREE (Takeaway)'}
+                  </span>
                 </div>
               </div>
 

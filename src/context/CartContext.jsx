@@ -283,8 +283,8 @@ Thank you! 🔥`;
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const discountAmount = appliedPromo ? Math.round((subtotal * appliedPromo.discount) / 100) : 0;
   const deliveryFee = subtotal > 0 ? (orderMode === 'delivery' ? 150 : 0) : 0;
-  const taxAmount = Math.round((subtotal - discountAmount) * 0.08);
-  const grandTotal = Math.max(0, subtotal - discountAmount + deliveryFee + taxAmount);
+  const taxAmount = 0;
+  const grandTotal = Math.max(0, subtotal - discountAmount + deliveryFee);
   const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   // Place Order Action
